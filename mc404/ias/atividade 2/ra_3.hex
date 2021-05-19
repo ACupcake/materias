@@ -1,0 +1,45 @@
+### instrucoes ###
+#.org 0x000
+#Multiplica entrada por 10 (gravidade): LOAD MQ,M(0x110); MUL M(0x101)
+000 09 110 0B 101
+
+#Salva multiplicação em y: LOAD MQ; STOR M(0x103)
+001 0A 000 21 103
+
+#Divide y por 2: DIV M(0x102); LOAD MQ 
+002 0C 102 0A 000
+
+#Armazena y/2 em k: STOR M(0x104); JUMP M(0x004,0:19)
+003 21 104 0D 004
+
+#Carrega y em AC: LOAD M(0x103); JUMP M(0x005,0:19)
+004 01 103 0D 005
+
+#Divide AC por k: DIV M(0x104); LOAD MQ
+005 0C 104 0A 000
+
+#Adiciona AC+k e divide por 2: ADD M(0x104); RSH
+006 05 104 15 000
+
+#Armazena AC em k: STOR M(0x104); JUMP M(0x008,0:19)
+007 21 104 0D 008
+
+#Subtrai 1 do contador: LOAD M(0x105); SUB M(0x106)
+008 01 105 06 106
+
+#Se AC for não negativo pula para endereço 004: STOR M(0x105); JUMP+M(0x004,0:19)
+009 21 105 0F 004
+
+#Carrega valor final de y em AC e sai do programa: LOAD M(0x104); EXIT
+00A 01 104 0D 400
+
+
+
+### variaveis ###
+#.org 0x101
+101 00 00 00 00 0A #.word 10 (gravidade)
+102 00 00 00 00 02
+103 00 00 00 00 00 #.word y
+104 00 00 00 00 00 #.word k
+105 00 00 00 00 09 #.word 9 (contador com 10 valores [0, 9])
+106 00 00 00 00 01 #.word 1 (constante 1 usada na subtracao do contador)

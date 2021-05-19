@@ -1,0 +1,30 @@
+### instrucoes ###
+#Multiplica entrada por 10
+000 09 110 0B 050 #LOAD MQ,M(entrada); MUL M(gravidade)
+001 0A 000 21 051 #LOAD MQ; STOR M(y)
+
+#Divide y por 2
+002 15 000 21 052 #RSH; STOR M(k)
+
+#loop:
+#Faz operacao ((y/k) + k)/2
+003 01 051 0C 052 #LOAD M(y); DIV M(k)
+004 0A 000 05 052 #LOAD MQ; ADD M(k)
+005 15 000 21 052 #RSH; STOR M(k)
+
+#Subtrai 1 do contador
+006 01 053 06 054 #LOAD M(contador); SUB M(CONSTANTE_1)
+
+#if(contador >= 0) goto loop
+007 21 053 0F 003 #STOR M(contador); JUMP+M(loop,0:19)
+
+#Armazena AC = k' e sai do programa
+008 01 052 0D 400 #LOAD M(k); JUMP (0x400)
+
+
+### variaveis ###
+050 00 00 00 00 0A #.word 10 (gravidade)
+051 00 00 00 00 00 #variavel y
+052 00 00 00 00 00 #variavel k
+053 00 00 00 00 09 #.word 9 (contador)(10 valores [0, 9])
+054 00 00 00 00 01 #.SET CONSTANTE_1 1 (usada na subtracao do contador)

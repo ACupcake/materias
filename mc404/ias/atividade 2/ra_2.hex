@@ -1,0 +1,20 @@
+#instructions
+000 09 110 0B 101 #Multiplica entrada por 10
+001 0A 000 21 103 #Salva multiplicação em y(103)
+002 0C 102 0A 000 #Divide y(103) por 2
+003 21 104 0D 004 #armazena y/2 em k(104)
+004 01 103 0D 005 #Carrega y(103) em AC
+005 0C 104 0A 000 #Divide AC por k(104)
+006 05 104 0C 102 #Adiciona AC+k(104) e divide por 2(102)
+007 0A 000 21 104 #Armazena AC em k(104)
+008 01 105 06 106 #Subtrai 1 do contador(105)
+009 21 105 0F 004 #Se AC for não negativo pula para endereço 004
+00A 01 104 0D 400 #Carrega valor final de y em AC e sai do programa
+#variables
+101 00 00 00 00 0A #int 10 (gravity)
+102 00 00 00 00 02 #int 2
+103 00 00 00 00 00 #int y
+104 00 00 00 00 00 #int k
+#counter variables
+105 00 00 00 00 09 #int 9
+106 00 00 00 00 01 #int 1

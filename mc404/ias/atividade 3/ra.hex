@@ -1,0 +1,33 @@
+### instrucoes ###
+#inicio:
+#Acha valor do vetor1 e do vetor 2 na posicao i
+000 01 3FF 12 001 #LOAD M(enderecoVet1); STOR M(001,8:19)
+001 01 000 21 053 #LOAD M(0x000); STOR M(temporario)
+002 01 3FE 12 003 #LOAD M(enderecoVet2); STOR M(003,8:19)
+
+#Multiplica vetor1[i] * vetor2[i]
+003 09 000 0B 053 #LOAD MQ,M(0x000); MUL M(temporario)
+
+#Soma novo valor ao somatorio
+004 0A 000 05 051 #LOAD MQ; ADD (somatorio)
+
+#Atualiza endereco dos vetores 1 e 2 e o valor indice
+005 21 051 01 3FF #STOR M(somatorio); LOAD M(enderecoVet1) 
+006 05 052 21 3FF #ADD (CONSTANTE_1); STORM M(enderecoVet1)
+007 01 3FE 05 052 #LOAD M(enderecoVet2); ADD (CONSTANTE_1)
+008 21 3FE 01 050 #STORM M(enderecoVet2); LOAD M(indice)
+009 05 052 21 050 #ADD (CONSTANTE_1); STORM M(indice)
+
+#if((tamanhoVetor - indice) >= 0) goto inicio
+00A 01 3FD 06 050 #LOAD M(tamanhoVetor); SUB M(indice)
+00B 0F 000 01 051 #JUMP+M(inicio,0:19); LOAD M(somatorio)
+
+#Sai do programa
+00C 0D 400 00 000 #JUMP M(0x400)
+
+
+### variaveis ###
+050 00 00 00 00 01 #.word 1 (indice do vetor)
+051 00 00 00 00 00 #variavel somatorio
+052 00 00 00 00 01 #.SET CONSTANTE_1 1 (usada na subtracao)
+053 00 00 00 00 00 #variavel temporaria

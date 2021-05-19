@@ -1,0 +1,14 @@
+SoCa Sistema Operacional
+	-gerencia hardware
+	-modo supervisor
+	-linguagem de montagem
+	-api para bico que faz as syscalls
+
+BiCo Biblioteca de Controle
+	-api para Loco
+	-modo usuário
+
+LoCo Lógica de Controle
+	-Lógica de controle do carro
+	-Linguagem C
+	-Modo usuário
